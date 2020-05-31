@@ -5,7 +5,7 @@ import BookItem from '../components/BookItem';
 import styled from 'styled-components';
 
 import Layout from "../components/layout"
-// import Image from "../components/image"
+import Image from "../components/image"
 // import SEO from "../components/seo"
 
 
@@ -20,7 +20,7 @@ const IndexPage = (props) => {
         allBookEdges.map(({ node }) => (
           <div key={node.id}>
             <BookItem
-              bookCover={node.localImage.publicURL}
+              bookCover={node.localImage.childImageSharp.fixed}
               // bookCover={node.imageUrl}
               authorName={node.author.name}
               bookSummary={node.summary}
@@ -57,7 +57,8 @@ const LinkButton = styled.div`
   }
 `
 
-// imageUrl replaced -> localImage (static asset)
+// 1. imageUrl replaced -> localImage (static asset)
+// 2. Invalid prop 'fixed' supplied to 'Image' -> ...GatsbyImageSharpFixed
 export const query = graphql`
 {
   allBook {
@@ -66,8 +67,12 @@ export const query = graphql`
         summary
         title
         id
-        localImage {
-          publicURL
+        localImage{
+          childImageSharp{
+            fixed(width: 200){
+              ...GatsbyImageSharpFixed
+            }
+          }
         }
         imageUrl
         author {

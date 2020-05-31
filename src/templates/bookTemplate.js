@@ -9,7 +9,7 @@ function BookTemplate(props) {
     return (
         <Layout>
             <BookItem
-                bookCover={pageContext.localImage.publicURL}
+                bookCover={pageContext.localImage.childImageSharp.fixed}
                 // bookCover={pageContext.imageUrl}
                 authorName={pageContext.author.name}
                 bookSummary={pageContext.summary}

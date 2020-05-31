@@ -20,8 +20,12 @@ exports.createPages = ({ graphql, actions }) => {
               summary
               title
               id
-              localImage {
-                publicURL
+              localImage{
+                childImageSharp{
+                  fixed(width: 200){
+                    src
+                  }
+                }
               }
               imageUrl
               author {
