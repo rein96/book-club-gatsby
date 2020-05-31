@@ -10,7 +10,7 @@ exports.createPages = ({ graphql, actions }) => {
     console.log("exports.createPages -> actions", actions)
     const { createPage } = actions;
 
-    const bookTemplate = path.resolve('src/templates/bookTemplate.js');
+    const BookTemplate = path.resolve('src/templates/BookTemplate.js');
 
     return graphql(`
     {
@@ -20,6 +20,10 @@ exports.createPages = ({ graphql, actions }) => {
               summary
               title
               id
+              localImage {
+                publicURL
+              }
+              imageUrl
               author {
                 name
               }
@@ -36,7 +40,7 @@ exports.createPages = ({ graphql, actions }) => {
             // Action
             createPage({
                 path:`/book/${node.id}`,
-                component: bookTemplate,
+                component: BookTemplate,
                 context: node
             })
         });
@@ -44,10 +48,10 @@ exports.createPages = ({ graphql, actions }) => {
     })
 }
 
-exports.onCreateWebpackConfig = ({actions}) => {
-    actions.setWebpackConfig({
-        resolve: {
-            modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-        }
-    })
-}
+// exports.onCreateWebpackConfig = ({actions}) => {
+//     actions.setWebpackConfig({
+//         resolve: {
+//             modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+//         }
+//     })
+// }
