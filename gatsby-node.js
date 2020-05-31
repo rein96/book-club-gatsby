@@ -12,25 +12,14 @@ exports.createPages = ({ graphql, actions }) => {
 
     const BookTemplate = path.resolve('src/templates/BookTemplate.js');
 
+    // to solve Invalid prop 'fixed' supplied to 'Image', node cannot process ...GatsbyImageSharpFixed
+    // so we only pass ID here
     return graphql(`
     {
         allBook {
           edges {
             node {
-              summary
-              title
               id
-              localImage{
-                childImageSharp{
-                  fixed(width: 200){
-                    src
-                  }
-                }
-              }
-              imageUrl
-              author {
-                name
-              }
             }
           }
         }
@@ -45,7 +34,9 @@ exports.createPages = ({ graphql, actions }) => {
             createPage({
                 path:`/book/${node.id}`,
                 component: BookTemplate,
-                context: node
+                context: {
+                  bookId: node.id
+                }
             })
         });
 
