@@ -70,7 +70,7 @@ export const BookComments = ({ firebase, bookId }) => {
     <div>
       <CommentForm onSubmit={handlePostCommentSubmit}>
         <Input value={commentText} onChange={e => {
-          e.persist();
+          e.persist();  // for asynchronous such as setState
           setCommentText(e.target.value);
         }} />
         <Button type="submit">

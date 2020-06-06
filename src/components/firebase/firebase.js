@@ -33,6 +33,11 @@ class Firebase {
     })
   }
 
+  async postComment({text, bookId}){
+    const postCommentCallable = this.functions.httpsCallable('postComment'); // 'postComment' = exports.postComment in firebase cloud functions
+    return postCommentCallable({text, bookId})
+  }
+
   // realtime = onSnapshot = no need 'async' -> it will error
   subscribeToBookComments({bookId, onSnapshot}){
     const bookRef = this.db.collection('books').doc(bookId)
