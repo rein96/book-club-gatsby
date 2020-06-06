@@ -14,6 +14,8 @@ Note:
 3. Reinstall firebase FIRST, gatsby-firesource SECOND
     *To fix: Unhandled Rejection (TypeError): app.auth is not a function, because firebase and gatsby-firesource are conflicting each other
 
+1. gatsby-browser and gatsby-node = to persist Layout component
+
 Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
 
 _Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.org/docs/gatsby-starters/)._

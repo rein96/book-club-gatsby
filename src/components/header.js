@@ -16,56 +16,43 @@ const Header = ({ siteTitle }) => {
   }
 
   return (
-    <header
-      style={{
-        background: `rebeccapurple`,
-        marginBottom: `1.45rem`,
-      }}
-    >
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `1.45rem 1.0875rem`,
-          display: 'flex',
-        }}
-      >
-        <h1 style={{ margin: 0, flexGrow: 1 }}>
-          <Link
-            to="/"
-            style={{
-              color: `white`,
-              textDecoration: `none`,
-            }}
-          >
+    <HeaderWrapper>
+      <HeaderContent>
+
+        <h1>
+          <Link to="/">
             {siteTitle}
           </Link>
         </h1>
-        <div style={{ margin: 'auto 0' }}>
+        <div>
           {
             user && user.email
             &&
-            <div>
-              Hello, {user.email}
+            <UserInfo>
+              Hello, { user.username || user.email}
               <div style={{ textAlign: 'right' }}>
                 <LogoutLink onClick={handleLogoutClick}>
                   Logout
               </LogoutLink>
               </div>
-            </div>
+            </UserInfo>
           }
           {
             (!user || !user.email) &&
-            <div>
+            <LoginLink>
               <Link to='/login'>
                 Login
-            </Link>
-            </div>
+              </Link>
+              <Divider />
+              <Link to='/register'>
+                Register
+              </Link>
+            </LoginLink>
           }
         </div>
 
-      </div>
-    </header>
+      </HeaderContent>
+    </HeaderWrapper>
   )
 }
 const LogoutLink = styled.span`

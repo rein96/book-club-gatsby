@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import styled from 'styled-components'
-import {Button} from './Button';
-import {Input} from './Input';
+import { Button } from './Button';
+import { Input } from './Input';
 import moment from 'moment';
 
 const CommentForm = styled.form`
@@ -29,14 +29,14 @@ const CommentListItem = styled.div`
   padding: 4px 0;
 `
 
-export const BookComments = ({firebase, bookId}) => {
+export const BookComments = ({ firebase, bookId }) => {
 
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
 
   useEffect(() => {
     const unsubscribe = firebase.subscribeToBookComments({
-      bookId,
+      bookId: bookId,
       onSnapshot: (snapshot) => {
         console.log(snapshot);
         const snapshotComments = [];
@@ -51,13 +51,13 @@ export const BookComments = ({firebase, bookId}) => {
     })
 
     return () => {
-      if(unsubscribe){
+      if (unsubscribe) {
         unsubscribe();
       }
     }
   }, [])
 
-  function handlePostCommentSubmit(e){
+  function handlePostCommentSubmit(e) {
     e.preventDefault();
     console.log(commentText);
     firebase.postComment({
@@ -80,7 +80,8 @@ export const BookComments = ({firebase, bookId}) => {
       {comments.map(comment => (
         <CommentListItem key={comment.id}>
           <strong>
-            {comment.username} - {moment(comment.dateCreated.toDate()).format('HH:mm Do MMM YYYY')}
+            {comment.username}
+            {/* {comment.username} - {moment(comment.dateCreated.toDate()).format('HH:mm Do MMM YYYY')} */}
           </strong>
           <div>
             {comment.text}

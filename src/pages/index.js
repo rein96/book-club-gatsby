@@ -15,7 +15,7 @@ const IndexPage = (props) => {
   console.log("IndexPage -> allBookEdges", allBookEdges)
 
   return (
-    <Layout>
+    <section>
       {
         allBookEdges.map(({ node }) => (
           <div key={node.id}>
@@ -37,7 +37,7 @@ const IndexPage = (props) => {
           </div>
         ))
       }
-    </Layout >
+    </section >
   )
 }
 
