@@ -29,8 +29,24 @@ const Header = ({ siteTitle }) => {
             user && user.email
             &&
             <UserInfo>
-              Hello, { user.username || user.email}
+              Hello, {user.username || user.email}
               <div style={{ textAlign: 'right' }}>
+                {user.isAdmin &&
+                  <>
+                    <AdminLink>
+                      <Link to="/add-author">
+                        Add author
+                  </Link>
+                    </AdminLink>
+                    <Divider />
+                    <AdminLink>
+                      <Link to="/add-book">
+                        Add book
+                  </Link>
+                    </AdminLink>
+                    <Divider />
+                  </>
+                }
                 <LogoutLink onClick={handleLogoutClick}>
                   Logout
               </LogoutLink>

@@ -21,6 +21,19 @@ class Firebase {
       .onSnapshot(onSnapshot)
   }
 
+  async createAuthor({authorName}){
+    const createAuthorCallable = this.functions.httpsCallable('createAuthor');
+    createAuthorCallable({authorName})
+  }
+
+  async getAuthors(){
+    return this.db.collection('authors').get()
+  }
+
+  async createBook({ bookName, authorId, bookCover }){
+    const createBookCallable = this.functions.httpsCallable('createBook');
+    return createBookCallable({bookName, authorId, bookCover })
+  }
 
   async register({ email, password, username }) {
     // Create email and password in firebase Authentication
