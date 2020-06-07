@@ -13,24 +13,22 @@ class Firebase {
     }
   }
 
-  async getUserProfile({userId}){
-    return this.db.collection('publicProfiles').where('userId', '==', userId).get();
+  // realtime = onSnapshot = no need 'async' -> to check if the user has username after registration success
+  getUserProfile({userId, onSnapshot}){
+    return this.db.collection('publicProfiles')
+      .where('userId', '==', userId)
+      .limit(1)
+      .onSnapshot(onSnapshot)
   }
 
 
   async register({ email, password, username }) {
-    // return  this.auth.createUserWithEmailAndPassword(email, password);
+    // Create email and password in firebase Authentication
+    await this.auth.createUserWithEmailAndPassword(email, password);
 
-    // await this.auth.createUserWithEmailAndPassword(email, password);
-    // const createProfileCallable = this.functions.httpsCallable('createPublicProfile');
-    // return createProfileCallable({
-    //   username
-    // })
-
-    const newUser = await this.auth.createUserWithEmailAndPassword(email, password);
-    return this.db.collection('publicProfiles').doc(username).set({
-      userId: newUser.user.uid
-    })
+    // Set username (docs) and userId (property) in db
+    const createProfileCallable = this.functions.httpsCallable('createPublicProfile');
+    createProfileCallable({ username })
   }
 
   async postComment({text, bookId}){
@@ -41,7 +39,10 @@ class Firebase {
   // realtime = onSnapshot = no need 'async' -> it will error
   subscribeToBookComments({bookId, onSnapshot}){
     const bookRef = this.db.collection('books').doc(bookId)
-    return this.db.collection('comments').where('book', '==', bookRef).onSnapshot(onSnapshot)  // 'book' = reference
+    return this.db.collection('comments')
+      .where('book', '==', bookRef)
+      .orderBy('dateCreated', 'desc') // descending
+      .onSnapshot(onSnapshot)  // 'book' = reference
   }
 
   async login({ email, password }) {

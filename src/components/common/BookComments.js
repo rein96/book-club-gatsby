@@ -70,7 +70,7 @@ export const BookComments = ({ firebase, bookId }) => {
     <div>
       <CommentForm onSubmit={handlePostCommentSubmit}>
         <Input value={commentText} onChange={e => {
-          e.persist();  // for asynchronous such as setState
+          e.persist();
           setCommentText(e.target.value);
         }} />
         <Button type="submit">
@@ -80,8 +80,7 @@ export const BookComments = ({ firebase, bookId }) => {
       {comments.map(comment => (
         <CommentListItem key={comment.id}>
           <strong>
-            {comment.username}
-            {/* {comment.username} - {moment(comment.dateCreated.toDate()).format('HH:mm Do MMM YYYY')} */}
+            {comment.username} - {moment(comment.dateCreated.toDate()).format('HH:mm Do MMM YYYY')}
           </strong>
           <div>
             {comment.text}
